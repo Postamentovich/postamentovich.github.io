@@ -1,17 +1,13 @@
-export default function promisify(f) {
+function promisify(f) {
   return function(...args) {
-    return new Promise((resolve, reject) => {
-      function callback(err, result) {
-        if (err) {
-          return reject(err);
-        } else {
-          resolve(result);
-        }
+    return new Promise(resolve => {
+      function callback(result) {
+        resolve(result);
       }
-
       args.push(callback);
-
       f.call(this, ...args);
     });
   };
 }
+
+module.exports = promisify;
