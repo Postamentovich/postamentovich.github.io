@@ -32,11 +32,13 @@ const promisifyAdd = promisify(add);
 const promisifyLess = promisify(less);
 const promisifyEqual = promisify(equal);
 
-console.log("Вариант 1");
-
 const array1 = new AsyncArray([-500, 1, 2, 100, 5, 7, 10, 10000]);
-console.log("Создаем новый асинхронный массив:");
+console.log("Создаем асинхронный массив array1:");
 array1.print();
+
+const array2 = new AsyncArray([-900, 800, 1, 0, -9]);
+console.log("Создаем асинхронный массив array2:");
+array2.print();
 
 /**
  * Функция находит максимальный элемент в массиве.
@@ -53,31 +55,24 @@ async function getMaxValueWithAwait(array, cb) {
 
   const length = await promisifyLength();
 
-  console.log(`Получем длину массива --> ${length}`);
-
   /**
    * Проходим по массиву циклом for, и проверяем, меньше
    * текущее максимальное значение чем элемент массива или нет.
    */
 
-  console.log("Проходим по массиву через цикл for");
   for (
     let i = 0;
     await promisifyLess(i, length);
     i = await promisifyAdd(i, 1)
   ) {
     const item = await promisifyGet(i);
-    console.log(`Значение элемента под индексом ${i} ---> ${item}`);
-    if (await promisifyEqual(maxValue, null)) {
-        
-      maxValue = item;
-    } else if (await promisifyLess(maxValue, item)) maxValue = item;
+
+    if (await promisifyEqual(maxValue, null)) maxValue = item;
+    else if (await promisifyLess(maxValue, item)) maxValue = item;
   }
 
   cb(maxValue);
 }
-
-const array2 = new AsyncArray([-900, 800, 1, 0, -9]);
 
 /**
  * Функция находит максимальный элемент в массиве.
@@ -133,14 +128,16 @@ function getMaxValueWithThen(array, cb) {
 
         checkLastElement();
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(e => {});
   };
 
   checkLastElement();
 }
 
-getMaxValueWithThen(array1, result => console.log(result));
+getMaxValueWithThen(array1, result =>
+  console.log(`Максимальное значение в массиве array1 ---> ${result}`)
+);
 
-getMaxValueWithAwait(array2, result => console.log(result));
+getMaxValueWithAwait(array2, result =>
+  console.log(`Максимальное значение в массиве array2 ---> ${result}`)
+);
