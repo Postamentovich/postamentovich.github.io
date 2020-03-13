@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="shri-async-hw.js"></script>
+    <script src="max-value-in-arrray.js"></script>
     <title>Домашнее задание ШРИ по теме “Асинхронность”</title>
 </head>
+
 <body>
-    <h1>Test</h1>
+    <h1>Домашнее задание ШРИ по теме “Асинхронность”</h1>
+    <h2>Вариант 1</h2>
+    <p>Найти максимальный элемент в массиве.</p>
+    <em>
+        Ниже один из вариантов реализации функции.
+        В файле max-value-in-array.js реализация с помощью цепочки промисов.
+    </em>
+    <pre>
+/**
+ * Функция находит максимальный элемент в массиве.
+ * Реализована с помощью async/await.
+ *
+ * @param {AsyncArray<number>} array - асинхронный массив
+ * @param {(result: number | null) => void} cb - callback
+ */
+async function getMaxValueWithAwait(array, cb) {
+  const promisifyLength = promisify(array.length);
+  const promisifyGet = promisify(array.get);
+
+  let maxValue = null;
+
+  const length = await promisifyLength();
+
+  /**
+   * Проходим по массиву циклом for, и проверяем, меньше
+   * текущее максимальное значение чем элемент массива или нет.
+   */
+
+  for (
+    let i = 0;
+    await promisifyLess(i, length);
+    i = await promisifyAdd(i, 1)
+  ) {
+    const item = await promisifyGet(i);
+    if (await promisifyEqual(maxValue, null)) maxValue = item;
+    else if (await promisifyLess(maxValue, item)) maxValue = item;
+  }
+
+  cb(maxValue);
+}
+    </pre>
 </body>
+
 </html>
