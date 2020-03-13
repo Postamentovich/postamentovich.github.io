@@ -13,7 +13,7 @@ const {
 
 /**
  * Промисификация функций с callback
- * @param {func} f 
+ * @param {func} f
  * @returns {() => Promise}
  */
 function promisify(f) {
@@ -28,14 +28,15 @@ function promisify(f) {
   };
 }
 
-
-const array1 = new AsyncArray([-500, 1, 2, 100, 5, 7, 10, 10000]);
-
-const array2 = new AsyncArray([-900, 800, 1, 0, -9]);
-
 const promisifyAdd = promisify(add);
 const promisifyLess = promisify(less);
 const promisifyEqual = promisify(equal);
+
+console.log("Вариант 1");
+
+const array1 = new AsyncArray([-500, 1, 2, 100, 5, 7, 10, 10000]);
+console.log("Создаем новый асинхронный массив:");
+array1.print();
 
 /**
  * Функция находит максимальный элемент в массиве.
@@ -52,23 +53,31 @@ async function getMaxValueWithAwait(array, cb) {
 
   const length = await promisifyLength();
 
+  console.log(`Получем длину массива --> ${length}`);
+
   /**
    * Проходим по массиву циклом for, и проверяем, меньше
    * текущее максимальное значение чем элемент массива или нет.
    */
 
+  console.log("Проходим по массиву через цикл for");
   for (
     let i = 0;
     await promisifyLess(i, length);
     i = await promisifyAdd(i, 1)
   ) {
     const item = await promisifyGet(i);
-    if (await promisifyEqual(maxValue, null)) maxValue = item;
-    else if (await promisifyLess(maxValue, item)) maxValue = item;
+    console.log(`Значение элемента под индексом ${i} ---> ${item}`);
+    if (await promisifyEqual(maxValue, null)) {
+        
+      maxValue = item;
+    } else if (await promisifyLess(maxValue, item)) maxValue = item;
   }
 
   cb(maxValue);
 }
+
+const array2 = new AsyncArray([-900, 800, 1, 0, -9]);
 
 /**
  * Функция находит максимальный элемент в массиве.
