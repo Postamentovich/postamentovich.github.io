@@ -76,7 +76,7 @@ async function getMaxValueWithAwait(array, cb) {
 
 /**
  * Функция находит максимальный элемент в массиве.
- * Реализована с помощью Promise.then().
+ * Реализована с помощью цепочки промисов
  *
  * @param {AsyncArray<number>} array - асинхронный массив
  * @param {(result: number | null) => void} cb - callback
@@ -95,7 +95,7 @@ function getMaxValueWithThen(array, cb) {
     let lastElement = null;
 
     promisifyPop()
-      /** Получем элемент */
+      /** Получаем элемент */
       .then(item => {
         lastElement = item;
 
