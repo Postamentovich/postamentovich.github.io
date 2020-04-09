@@ -6,13 +6,6 @@ $(".card").each(function (e) {
     }
 });
 
-const TEMPS = {
-    manual: -10,
-    cold: 0,
-    warm: 23,
-    hot: 30,
-};
-
 document.addEventListener("DOMContentLoaded", function () {
     $(".card").each(function (e) {
         if ($(this).hasClass("card_size_s")) {
@@ -34,21 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
         '<p class="card-source">Чайник</p>' +
         '<p class="card-time card-time_block">16:20, Сегодня</p>' +
         "</div>";
-});
-
-const selectButtonText = document.querySelector(".filter__select-button .button__text");
-const selectOptions = document.querySelectorAll(".filter__select-item");
-const popup = document.querySelector(".filter__select-popup");
-
-selectOptions.forEach((o) => {
-    o.addEventListener("click", function (e) {
-        document.querySelector("#" + e.target.dataset.group).checked = true;
-
-        selectOptions.forEach((opt) => opt.classList.toggle("filter__select-item_checked", false));
-        e.target.classList.toggle("filter__select-item_checked", true);
-        popup.classList.toggle("filter__select-popup_open", false);
-        selectButtonText.innerText = e.target.innerText;
-    });
 });
 
 $(document).ready(function () {
