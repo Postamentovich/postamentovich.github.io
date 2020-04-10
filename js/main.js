@@ -6,6 +6,12 @@
 //     }
 // });
 
+window.addEventListener("DOMContentLoaded", ()=>{
+    const a = document.querySelector(".buttons-wrap");
+    a.innerHTML = "<button class=\"button button_yellow\" type=\"button\">\u0414\u0430</button><button class=\"button\">\u041D\u0435\u0442</button>"
+}
+);
+
 const cards = document.querySelectorAll(".card");
 
 cards.forEach((el) => {
