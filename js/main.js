@@ -76,7 +76,7 @@ document.addEventListener(
                 fridgeInfoContainer.replaceWith(purchaseListContainer);
                 buttonsContainer.style.display = "none";
             };
-        }, 500);
+        });
 
         document
             .getElementsByClassName("header-menu__switcher")[0]
